@@ -7,7 +7,7 @@ import hotciv.framework.Player;
 import hotciv.framework.Position;
 import hotciv.framework.Tile;
 import hotciv.framework.Unit;
-import hotciv.different.AlphaWorldAgingStrategy;
+import hotciv.different.AlphaWinnerStrategy;
 
 import java.util.*;
 
@@ -28,16 +28,19 @@ public class GameImpl implements Game {
 	private int age = -4000;
 	HashMap<Position, CityImpl> mapCity = new HashMap<Position, CityImpl>();
 	HashMap<Position, UnitImpl> mapUnit = new HashMap<Position, UnitImpl>();
-	private WorldAgingStrategy was = new AlphaWorldAgingStrategy();
+	private WorldAgingStrategy worldAgingSrategy;
+	private WinnerStrategy ws = new AlphaWinnerStrategy();
 	
 	//Constructor
-	public GameImpl(){
+	public GameImpl(WorldAgingStrategy was){
 		mapCity.put(new Position(1, 1), new CityImpl(Player.RED));
 		mapCity.put(new Position(4, 1), new CityImpl(Player.BLUE));	
 		
 		mapUnit.put(new Position(2, 0), new UnitImpl(Player.RED, GameConstants.ARCHER) );
 		mapUnit.put(new Position(3, 2), new UnitImpl(Player.BLUE, GameConstants.LEGION) );
 		mapUnit.put(new Position(4, 3), new UnitImpl(Player.RED, GameConstants.SETTLER) );
+		
+		worldAgingSrategy = was;
 	}
 	
 	public Tile getTileAt(Position p) {
@@ -68,7 +71,7 @@ public class GameImpl implements Game {
 	}
 
 	public Player getWinner() {
-		return Player.RED;
+		return ws.winner();
 	}
 
 	public int getAge() {
@@ -98,7 +101,7 @@ public class GameImpl implements Game {
 			playerInTurn = Player.BLUE;
 		}
 		else{
-			age = was.worldAging(age);
+			age = worldAgingSrategy.worldAging(age);
 			playerInTurn = Player.RED;
 			for(CityImpl c : mapCity.values()){
 				c.doProductionSum();

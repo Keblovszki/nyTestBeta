@@ -1,9 +1,20 @@
 package hotciv.standard;
 
-import hotciv.framework.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import hotciv.framework.City;
+import hotciv.framework.Game;
+import hotciv.framework.GameConstants;
+import hotciv.framework.Player;
+import hotciv.framework.Position;
+import hotciv.framework.Tile;
+import hotciv.framework.Unit;
+import hotciv.different.*;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Skeleton class for AlphaCiv test cases
@@ -22,7 +33,7 @@ public class TestAlphaCiv {
 	/** Fixture for alphaciv testing. */
 	@Before
 	public void setUp() {
-		game = new GameImpl();
+		game = new GameImpl(new AlphaWorldAgingStrategy());
 	}
 
 	@Test
