@@ -4,6 +4,9 @@ import hotciv.framework.*;
 public class UnitImpl implements Unit{
 	private String type;
 	private Player owner;
+	private int defenseStrength = 0;
+	private int extraDefenseStrength = 0;
+	private int attackStrength = 0;
 	
 	//Constructor
 	public UnitImpl(Player p, String t){
@@ -29,12 +32,35 @@ public class UnitImpl implements Unit{
 	
 	@Override
 	public int getDefensiveStrength(){
-		return 0;
+		if(type.equals(GameConstants.ARCHER)) {
+			defenseStrength = 3;
+		}
+		if(type.equals(GameConstants.SETTLER)) {
+			defenseStrength = 3;
+		}
+		if(type.equals(GameConstants.LEGION)) {
+			defenseStrength = 2;
+		}
+		return defenseStrength + extraDefenseStrength;
+	}
+	
+	@Override
+	public void setDefensiveStrength(int bonusStrength){
+		extraDefenseStrength += bonusStrength;
 	}
 	
 	@Override
 	 public int getAttackingStrength(){
-		return 0;
+		if(type.equals(GameConstants.ARCHER)) {
+			attackStrength = 2;
+		}
+		if(type.equals(GameConstants.LEGION)) {
+			attackStrength = 4;
+		}
+		if(type.equals(GameConstants.SETTLER)) {
+			attackStrength = 0;
+		}
+		return attackStrength;
 	}
 
 }

@@ -1,17 +1,19 @@
 package hotciv.standard;
 
-import hotciv.different.BetaWorldAgingStrategy;
+import static org.junit.Assert.assertEquals;
+import hotciv.different.*;
 import hotciv.framework.*;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
 
 public class TestBetaCiv {
 	private Game game;
 	
 	@Before
 	public void setUp(){
-		game = new GameImpl(new BetaWorldAgingStrategy());
+		//UnitActionStrategy is Alpha because they have the same UnitAction, namely nothing..
+		game = new GameImpl(new BetaWorldAgingStrategy(), new BetaWinnerStrategy(), new AlphaUnitActionStrategy());
 	}
 	
 	@Test
@@ -71,5 +73,10 @@ public class TestBetaCiv {
 			game.endOfTurn();
 		}
 		assertEquals("Check that the year is 1990AD", 1990, game.getAge());
+	}
+	
+	@Test
+	public void theWinnerShouldBeRedIfRedHasAllTheCities(){
+		
 	}
 }

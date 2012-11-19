@@ -7,7 +7,6 @@ import hotciv.framework.Player;
 import hotciv.framework.Position;
 import hotciv.framework.Tile;
 import hotciv.framework.Unit;
-import hotciv.different.AlphaWinnerStrategy;
 
 import java.util.*;
 
@@ -28,11 +27,12 @@ public class GameImpl implements Game {
 	private int age = -4000;
 	HashMap<Position, CityImpl> mapCity = new HashMap<Position, CityImpl>();
 	HashMap<Position, UnitImpl> mapUnit = new HashMap<Position, UnitImpl>();
-	private WorldAgingStrategy worldAgingSrategy;
-	private WinnerStrategy ws = new AlphaWinnerStrategy();
+	private WorldAgingStrategy worldAgingStrategy;
+	private WinnerStrategy winnerStrategy;
+	private UnitActionStrategy unitActionStrategy;
 	
 	//Constructor
-	public GameImpl(WorldAgingStrategy was){
+	public GameImpl(WorldAgingStrategy was, WinnerStrategy ws, UnitActionStrategy uas){
 		mapCity.put(new Position(1, 1), new CityImpl(Player.RED));
 		mapCity.put(new Position(4, 1), new CityImpl(Player.BLUE));	
 		
@@ -40,7 +40,9 @@ public class GameImpl implements Game {
 		mapUnit.put(new Position(3, 2), new UnitImpl(Player.BLUE, GameConstants.LEGION) );
 		mapUnit.put(new Position(4, 3), new UnitImpl(Player.RED, GameConstants.SETTLER) );
 		
-		worldAgingSrategy = was;
+		worldAgingStrategy = was;
+		winnerStrategy = ws;
+		unitActionStrategy = uas;
 	}
 	
 	public Tile getTileAt(Position p) {
@@ -71,7 +73,7 @@ public class GameImpl implements Game {
 	}
 
 	public Player getWinner() {
-		return ws.winner();
+		return winnerStrategy.winner();
 	}
 
 	public int getAge() {
@@ -84,8 +86,8 @@ public class GameImpl implements Game {
 			mapUnit.remove(from);
 			return true;
 		}
-		
 		if(mapUnit.get(to) != null){
+			if(mapUnit.get(from).getDefensiveStrength() == 6)
 			mapUnit.remove(to);
 			mapUnit.put(to, mapUnit.get(from) );
 			mapUnit.remove(from);
@@ -101,7 +103,7 @@ public class GameImpl implements Game {
 			playerInTurn = Player.BLUE;
 		}
 		else{
-			age = worldAgingSrategy.worldAging(age);
+			age = worldAgingStrategy.worldAging(age);
 			playerInTurn = Player.RED;
 			for(CityImpl c : mapCity.values()){
 				c.doProductionSum();
@@ -115,14 +117,15 @@ public class GameImpl implements Game {
 
 	public void changeProductionInCityAt(Position p, String unitType) {
 		mapCity.get(p).setProduction(unitType);
-		
 	}
 
 	public void performUnitActionAt(Position p) {
-		
+		unitActionStrategy.setGame(this);
+		String u = mapUnit.get(p).getTypeString();
+		unitActionStrategy.performUnitActionAt(u, p);
 	}
 	
-	public void createProductionInCityAt(Position p){
+	public void createProductionInCityAt(Position p) {
 		final Position south = p.getSouth(p);
 		final Position north = p.getNorth(p);
 		final Position east = p.getEast(p);
@@ -182,5 +185,11 @@ public class GameImpl implements Game {
 				}
 			}
 		}
+	}
+	public void removeUnit(Position p){
+		mapUnit.remove(p);
+	}
+	public void addCity(Position p, Player owner){
+		mapCity.put(p, new CityImpl(owner));
 	}
 }
