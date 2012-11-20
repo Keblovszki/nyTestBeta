@@ -8,7 +8,7 @@ public class CityImpl implements City {
 	private String unitProduction = null;
 	
 	//Constructor
-	public CityImpl(Player p){
+	public CityImpl(Player p) {
 		owner = p;
 		production = 0;
 	}
@@ -16,6 +16,10 @@ public class CityImpl implements City {
 	@Override
 	public Player getOwner() {
 		return owner;
+	}
+	
+	public void setOwner(Player p) {
+		owner = p;
 	}
 
 	@Override

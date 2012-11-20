@@ -32,7 +32,7 @@ public class GameImpl implements Game {
 	private UnitActionStrategy unitActionStrategy;
 	
 	//Constructor
-	public GameImpl(WorldAgingStrategy was, WinnerStrategy ws, UnitActionStrategy uas){
+	public GameImpl(WorldAgingStrategy was, WinnerStrategy ws, UnitActionStrategy uas) {
 		mapCity.put(new Position(1, 1), new CityImpl(Player.RED));
 		mapCity.put(new Position(4, 1), new CityImpl(Player.BLUE));	
 		
@@ -46,10 +46,10 @@ public class GameImpl implements Game {
 	}
 	
 	public Tile getTileAt(Position p) {
-		if(p.equals(new Position(1, 0))){
+		if(p.equals(new Position(1, 0))) {
 			return new TileImpl(new Position (1, 0), GameConstants.OCEANS);
 		}
-		if(p.equals(new Position(0, 1))){
+		if(p.equals(new Position(0, 1))) {
 			return new TileImpl(new Position (0, 1), GameConstants.HILLS);
 		}
 		if(p.equals(new Position(2, 2))){
@@ -73,6 +73,7 @@ public class GameImpl implements Game {
 	}
 
 	public Player getWinner() {
+		winnerStrategy.setGame(this);
 		return winnerStrategy.winner();
 	}
 
@@ -81,21 +82,37 @@ public class GameImpl implements Game {
 	}
 
 	public boolean moveUnit(Position from, Position to) {
-		if(mapUnit.get(to) == null ){
+		if(mapUnit.get(to) == null ) {
 			mapUnit.put(to, mapUnit.get(from) );
 			mapUnit.remove(from);
-			return true;
+			if(mapCity.get(to).getOwner() == mapUnit.get(to).getOwner()) {
+				return true;
+			}
+			else {
+				mapCity.get(to).setOwner(mapUnit.get(to).getOwner());
+				return true;
+			}
 		}
-		if(mapUnit.get(to) != null){
-			if(mapUnit.get(from).getDefensiveStrength() == 6)
-			mapUnit.remove(to);
-			mapUnit.put(to, mapUnit.get(from) );
-			mapUnit.remove(from);
-			return true;
+		if(mapUnit.get(to) != null) {
+			if(mapUnit.get(from).getDefensiveStrength() == 6) {
+				return false;
+			}
+			else {
+				mapUnit.remove(to);
+				mapUnit.put(to, mapUnit.get(from) );
+				mapUnit.remove(from);
+				if(mapCity.get(to) != null ) {
+					if(mapCity.get(to).getOwner() == mapUnit.get(to).getOwner()) {
+						return true;
+					}
+					else {
+						mapCity.get(to).setOwner(mapUnit.get(to).getOwner());
+						return true;
+					}
+				}
+			}
 		}
-		else {
 			return false;
-		}
 	}
 
 	public void endOfTurn() {

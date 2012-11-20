@@ -77,6 +77,7 @@ public class TestBetaCiv {
 	
 	@Test
 	public void theWinnerShouldBeRedIfRedHasAllTheCities(){
-		
+		game.moveUnit(new Position(2, 0), new Position(4, 1));
+		assertEquals("Red should be the winner", game.getWinner(), Player.RED);
 	}
 }
