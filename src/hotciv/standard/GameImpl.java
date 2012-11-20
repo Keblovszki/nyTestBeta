@@ -27,37 +27,29 @@ public class GameImpl implements Game {
 	private int age = -4000;
 	HashMap<Position, CityImpl> mapCity = new HashMap<Position, CityImpl>();
 	HashMap<Position, UnitImpl> mapUnit = new HashMap<Position, UnitImpl>();
+	HashMap<Position, TileImpl> mapTile = new HashMap<Position, TileImpl>();
 	private WorldAgingStrategy worldAgingStrategy;
 	private WinnerStrategy winnerStrategy;
 	private UnitActionStrategy unitActionStrategy;
+	private WorldLayoutStrategy worldLayoutStrategy;
 	
 	//Constructor
-	public GameImpl(WorldAgingStrategy was, WinnerStrategy ws, UnitActionStrategy uas) {
-		mapCity.put(new Position(1, 1), new CityImpl(Player.RED));
-		mapCity.put(new Position(4, 1), new CityImpl(Player.BLUE));	
-		
-		mapUnit.put(new Position(2, 0), new UnitImpl(Player.RED, GameConstants.ARCHER) );
-		mapUnit.put(new Position(3, 2), new UnitImpl(Player.BLUE, GameConstants.LEGION) );
-		mapUnit.put(new Position(4, 3), new UnitImpl(Player.RED, GameConstants.SETTLER) );
+	public GameImpl(WorldAgingStrategy was, WinnerStrategy ws, UnitActionStrategy uas, WorldLayoutStrategy wls) {
 		
 		worldAgingStrategy = was;
 		winnerStrategy = ws;
 		unitActionStrategy = uas;
+		worldLayoutStrategy = wls;
+		
+		mapCity.putAll(worldLayoutStrategy.makeCityList());
+		
+		mapUnit.putAll(worldLayoutStrategy.makeUnitList());
+		
+		mapTile.putAll(worldLayoutStrategy.makeTileList());
 	}
 	
 	public Tile getTileAt(Position p) {
-		if(p.equals(new Position(1, 0))) {
-			return new TileImpl(new Position (1, 0), GameConstants.OCEANS);
-		}
-		if(p.equals(new Position(0, 1))) {
-			return new TileImpl(new Position (0, 1), GameConstants.HILLS);
-		}
-		if(p.equals(new Position(2, 2))){
-			return new TileImpl(new Position (2, 2), GameConstants.MOUNTAINS);
-		}
-		else{
-			return new TileImpl(p , GameConstants.PLAINS);
-		}
+		return mapTile.get(p);
 	}
 
 	public Unit getUnitAt(Position p) {
@@ -83,21 +75,27 @@ public class GameImpl implements Game {
 
 	public boolean moveUnit(Position from, Position to) {
 		if(mapUnit.get(to) == null ) {
-			mapUnit.put(to, mapUnit.get(from) );
-			mapUnit.remove(from);
-			if(mapCity.get(to).getOwner() == mapUnit.get(to).getOwner()) {
-				return true;
-			}
-			else {
-				mapCity.get(to).setOwner(mapUnit.get(to).getOwner());
-				return true;
-			}
-		}
-		if(mapUnit.get(to) != null) {
 			if(mapUnit.get(from).getDefensiveStrength() == 6) {
 				return false;
 			}
-			else {
+				else{mapUnit.put(to, mapUnit.get(from) );
+				mapUnit.remove(from);
+				if(mapCity.get(to) != null ) {
+					if(mapCity.get(to).getOwner() == mapUnit.get(to).getOwner()) {
+					return true;
+					}
+					else {
+						mapCity.get(to).setOwner(mapUnit.get(to).getOwner());
+						return true;
+					}
+				}
+			}
+		}
+		else if(mapUnit.get(to) != null) {
+			if(mapUnit.get(from).getDefensiveStrength() == 6) {
+				return false;
+			}
+			else{
 				mapUnit.remove(to);
 				mapUnit.put(to, mapUnit.get(from) );
 				mapUnit.remove(from);
@@ -203,10 +201,16 @@ public class GameImpl implements Game {
 			}
 		}
 	}
-	public void removeUnit(Position p){
+	
+	public void removeUnit(Position p) {
 		mapUnit.remove(p);
 	}
-	public void addCity(Position p, Player owner){
+	
+	public void addCity(Position p, Player owner) {
 		mapCity.put(p, new CityImpl(owner));
+	}
+	
+	public Collection<CityImpl> getAllCities() {
+		return mapCity.values();
 	}
 }

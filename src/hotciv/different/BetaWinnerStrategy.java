@@ -3,20 +3,29 @@ package hotciv.different;
 import hotciv.framework.*;
 import hotciv.standard.*;
 
-public class BetaWinnerStrategy implements WinnerStrategy{
+public class BetaWinnerStrategy implements WinnerStrategy {
 	private GameImpl game;
 	
 	public Player winner() {
-		Player p = this.game.getPlayerInTurn();
-		for(int i = 0; i < 16; i++) {
-			for(int j = 0; j < 16; j++) {
-				p = this.game.getCityAt(new Position(i, j)).getOwner();
-				if(p != null) {
-					break;
-				}
+		Player p = null;
+		Player owner = null;
+		Player owner1 = null;
+		
+		for(CityImpl c : this.game.getAllCities()) {
+			if(Player.RED == c.getOwner()) {
+				owner = c.getOwner();
+			}
+			if(Player.BLUE == c.getOwner()) {
+				owner1 = c.getOwner();
 			}
 		}
-		return Player.RED;
+		if(owner == null) {
+			p = Player.BLUE;
+		}
+		if(owner1 == null) {
+			p = Player.RED;
+		}
+		return p;
 	}
 	
 	public void setGame(GameImpl game) {
@@ -24,3 +33,5 @@ public class BetaWinnerStrategy implements WinnerStrategy{
 	}
 
 }
+
+	

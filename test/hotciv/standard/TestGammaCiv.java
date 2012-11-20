@@ -3,6 +3,7 @@ package hotciv.standard;
 import static org.junit.Assert.*;
 import hotciv.different.AlphaWinnerStrategy;
 import hotciv.different.AlphaWorldAgingStrategy;
+import hotciv.different.AlphaWorldLayoutStrategy;
 import hotciv.different.GammaUnitActionStrategy;
 import hotciv.framework.*;
 
@@ -14,7 +15,11 @@ public class TestGammaCiv {
 
 	@Before
 	public void setUp(){
-		game = new GameImpl(new AlphaWorldAgingStrategy(), new AlphaWinnerStrategy(), new GammaUnitActionStrategy());
+		game = new GameImpl(
+				new AlphaWorldAgingStrategy(),
+				new AlphaWinnerStrategy(),
+				new GammaUnitActionStrategy(), 
+				new AlphaWorldLayoutStrategy());
 	}
 	
 	@Test
@@ -42,8 +47,8 @@ public class TestGammaCiv {
 		assertEquals("The defenseStrength should be 6", 6, game.getUnitAt(p).getDefensiveStrength());
 		
 		//trying to move the archer but it shouldn't
-		game.moveUnit(p, p.getNorth(p));
-		assertNotNull("something", game.getUnitAt(p));
+		assertFalse("moveUnit should return false", game.moveUnit(p, p.getEast(p)));
+		assertNotNull("The archer stays at its position", game.getUnitAt(p));
 		assertEquals("The archer shouldn't move", game.getUnitAt(p).getTypeString(), GameConstants.ARCHER);
 		
 		//Invoke the fortify

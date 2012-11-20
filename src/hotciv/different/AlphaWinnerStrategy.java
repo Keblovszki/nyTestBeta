@@ -8,7 +8,7 @@ public class AlphaWinnerStrategy implements WinnerStrategy {
 	
 	@Override
 	public Player winner(){
-		int age = game.getAge();
+		int age = this.game.getAge();
 		if(age >= -3000){
 			return Player.RED;
 		}
@@ -17,7 +17,7 @@ public class AlphaWinnerStrategy implements WinnerStrategy {
 	
 	@Override
 	public void setGame(GameImpl game) {
-		
+		this.game = game;
 	}
 
 }
