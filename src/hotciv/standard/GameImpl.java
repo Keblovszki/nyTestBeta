@@ -74,6 +74,7 @@ public class GameImpl implements Game {
 	}
 
 	public boolean moveUnit(Position from, Position to) {
+		//Moves your unit
 		if(mapUnit.get(to) == null ) {
 			if(mapUnit.get(from).getDefensiveStrength() == 6) {
 				return false;
@@ -91,6 +92,7 @@ public class GameImpl implements Game {
 				}
 			}
 		}
+		//Attack another unit
 		else if(mapUnit.get(to) != null) {
 			if(mapUnit.get(from).getDefensiveStrength() == 6) {
 				return false;
