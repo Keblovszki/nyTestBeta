@@ -1,5 +1,7 @@
 package hotciv.framework;
 
+import java.util.ArrayList;
+
 /**
  * Position on the world map.
  * 
@@ -69,35 +71,58 @@ public class Position {
 		return "[" + r + "," + c + "]";
 	}
 
-	public Position getSouth(Position p) {
+	public Position getWest(Position p) {
 		return new Position(p.getRow(), p.getColumn() + 1);
 	}
 	
-	public Position getNorth(Position p) {
+	public Position getEast(Position p) {
 		return new Position(p.getRow(), p.getColumn() - 1);
 	}
 	
-	public Position getWest(Position p) {
+	public Position getNorth(Position p) {
 		return new Position(p.getRow() - 1, p.getColumn());
 	}
 	
-	public Position getEast(Position p) {
+	public Position getSouth(Position p) {
 		return new Position(p.getRow() + 1, p.getColumn());
 	}
 	
-	public Position getNorthWest(Position p) {
+	public Position getNorthEast(Position p) {
 		return new Position(p.getRow() - 1, p.getColumn() - 1);
 	}
 	
-	public Position getSouthWest(Position p) {
+	public Position getNorthWest(Position p) {
 		return new Position(p.getRow() - 1, p.getColumn() + 1);
 	}
 	
-	public Position getSouthEast(Position p) {
+	public Position getSouthWest(Position p) {
 		return new Position(p.getRow() + 1, p.getColumn() + 1);
 	}
 	
-	public Position getNorthEast(Position p) {
+	public Position getSouthEast(Position p) {
 		return new Position(p.getRow() + 1, p.getColumn() - 1);
+	}
+	
+	public ArrayList<Position> getNeighbours() {
+		final Position south = this.getSouth(this);
+		final Position north = this.getNorth(this);
+		final Position east = this.getEast(this);
+		final Position west = this.getWest(this);
+		final Position southWest = this.getSouthWest(this);
+		final Position southEast = this.getSouthEast(this);
+		final Position northWest = this.getNorthWest(this);
+		final Position northEast = this.getNorthEast(this);
+		final ArrayList<Position> aroundTheCity = new ArrayList<Position>();
+		
+		aroundTheCity.add(this);
+		aroundTheCity.add(north);
+		aroundTheCity.add(northEast);
+		aroundTheCity.add(east);
+		aroundTheCity.add(southEast);
+		aroundTheCity.add(south);
+		aroundTheCity.add(southWest);
+		aroundTheCity.add(west);
+		aroundTheCity.add(northWest);
+		return aroundTheCity;
 	}
 }

@@ -225,7 +225,7 @@ public class TestAlphaCiv {
 	public void blueLegionAt3_2() {
 		Unit u = game.getUnitAt(new Position(3, 2));
 		assertNotNull("u should not be null", u);
-		assertEquals("The tile at position (3, 2) should be a archer", GameConstants.LEGION, u.getTypeString());
+		assertEquals("The tile at position (3, 2) should be a legion", GameConstants.LEGION, u.getTypeString());
 		assertEquals("The player should be blue", Player.BLUE, u.getOwner());
 	}
 
@@ -233,7 +233,7 @@ public class TestAlphaCiv {
 	public void redSettlerAt4_3() {
 		Unit u = game.getUnitAt(new Position(4, 3));
 		assertNotNull("u should not be null", u);
-		assertEquals("The tile at position (4, 3) should be a archer", GameConstants.SETTLER, u.getTypeString());
+		assertEquals("The tile at position (4, 3) should be a settler", GameConstants.SETTLER, u.getTypeString());
 		assertEquals("The player should be red", Player.RED, u.getOwner());
 	}
 
@@ -300,9 +300,9 @@ public class TestAlphaCiv {
 			game.createProductionInCityAt(new Position(1, 1));
 		} 
 		
-		Unit u2 = game.getUnitAt(new Position (1, 0));
-		assertNotNull("There is a unit at position (1, 0)", u2);
-		assertEquals("There should be a settler at (1, 0)", GameConstants.SETTLER, u2.getTypeString());
+		Unit u2 = game.getUnitAt(new Position (0, 1));
+		assertNotNull("There is a unit at position (0, 1)", u2);
+		assertEquals("There should be a settler at (0, 1)", GameConstants.SETTLER, u2.getTypeString());
 		assertEquals("The productionSum should be 0", 0, c.getProductionSum());		
 		
 		// runs 25 rounds... and check for: Is it allowed to create a settler

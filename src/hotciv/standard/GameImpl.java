@@ -143,66 +143,25 @@ public class GameImpl implements Game {
 	}
 	
 	public void createProductionInCityAt(Position p) {
-		final Position south = p.getSouth(p);
-		final Position north = p.getNorth(p);
-		final Position east = p.getEast(p);
-		final Position west = p.getWest(p);
-		final Position southWest = p.getSouthWest(p);
-		final Position southEast = p.getSouthEast(p);
-		final Position northWest = p.getNorthWest(p);
-		final Position northEast = p.getNorthEast(p);
-		final ArrayList<Position> aroundTheCity = new ArrayList<Position>();
-		
-		aroundTheCity.add(p);
-		aroundTheCity.add(north);
-		aroundTheCity.add(northEast);
-		aroundTheCity.add(east);
-		aroundTheCity.add(southEast);
-		aroundTheCity.add(south);
-		aroundTheCity.add(southWest);
-		aroundTheCity.add(west);
-		aroundTheCity.add(northWest);
+		final ArrayList<Position> aroundTheCity = p.getNeighbours();
 		
 		//Archer costs 10 production
 		//Legions costs 15 production
-		
+		//Settler costs 30 production
 		if(mapCity.get(p) != null) {
 			CityImpl c = mapCity.get(p);
-			if(c.getProduction() == GameConstants.SETTLER ) {
-				if(c.getProductionSum() >= 30) {
-					for(Position currentPosition : aroundTheCity) {
-						if(mapUnit.get(currentPosition) == null) {
-							mapUnit.put(currentPosition, new UnitImpl(c.getOwner(), GameConstants.SETTLER));
-							break;
-						}
+			if(c.getProductionSum() >= GameConstants.costMap.get(c.getProduction())) {
+				for(Position currentPosition : aroundTheCity) {
+					if(mapUnit.get(currentPosition) == null) {
+						mapUnit.put(currentPosition, new UnitImpl(c.getOwner(), c.getProduction()));
+						break;
 					}
-					c.setProductionSum(-30);
 				}
+				c.setProductionSum(- GameConstants.costMap.get(c.getProduction()));
 			}
-			if(c.getProduction() == GameConstants.LEGION) {
-				if(c.getProductionSum() >= 15) {
-					for(Position currentPosition : aroundTheCity) {
-						if(mapUnit.get(currentPosition) == null) {
-							mapUnit.put(currentPosition, new UnitImpl(c.getOwner(), GameConstants.LEGION));
-							break;
-						}
-					}
-					c.setProductionSum(-15);
-				}
-			}
-			if(c.getProduction() == GameConstants.ARCHER ) {
-				if(c.getProductionSum() >= 10) {
-					for(Position currentPosition : aroundTheCity) {
-						if(mapUnit.get(currentPosition) == null) {
-							mapUnit.put(currentPosition, new UnitImpl(c.getOwner(), GameConstants.ARCHER));
-							break;
-						}
-					}
-					c.setProductionSum(-10);
-				}
-			}
+			
 		}
-	}
+	}	
 	
 	public void removeUnit(Position p) {
 		mapUnit.remove(p);

@@ -11,9 +11,9 @@ public class DeltaWorldLayoutStrategy implements WorldLayoutStrategy {
 	HashMap<Position, TileImpl> mapTile = new HashMap<Position, TileImpl>();
 
 	public HashMap<Position, UnitImpl> makeUnitList() {
-		mapUnit.put(new Position(2, 0), new UnitImpl(Player.RED, GameConstants.ARCHER));
-		mapUnit.put(new Position(3, 2), new UnitImpl(Player.BLUE, GameConstants.LEGION));
-		mapUnit.put(new Position(4, 3), new UnitImpl(Player.RED, GameConstants.SETTLER));
+		mapUnit.put(new Position(3, 8), new UnitImpl(Player.BLUE, GameConstants.ARCHER));
+		mapUnit.put(new Position(4, 4), new UnitImpl(Player.BLUE, GameConstants.LEGION));
+		mapUnit.put(new Position(5, 5), new UnitImpl(Player.BLUE, GameConstants.SETTLER));
 		return mapUnit;
 	}
 
