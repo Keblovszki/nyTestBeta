@@ -138,7 +138,7 @@ public class GameImpl implements Game {
 
 	public void performUnitActionAt(Position p) {
 		unitActionStrategy.setGame(this);
-		String u = mapUnit.get(p).getTypeString();
+		String u = mapUnit.get(p).getTypeString(); 
 		unitActionStrategy.performUnitActionAt(u, p);
 	}
 	
