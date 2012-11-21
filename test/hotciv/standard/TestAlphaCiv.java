@@ -305,21 +305,19 @@ public class TestAlphaCiv {
 		assertEquals("There should be a settler at (0, 1)", GameConstants.SETTLER, u2.getTypeString());
 		assertEquals("The productionSum should be 0", 0, c.getProductionSum());		
 		
-		// runs 25 rounds... and check for: Is it allowed to create a settler
-		for (int i = 0; i < 50; i++) {
+		// runs 20 rounds... and check for: Is it allowed to create a settler
+		for (int i = 0; i < 40; i++) {
 				game.endOfTurn();
 				game.createProductionInCityAt(new Position(1, 1));
 		}
 		
-		Unit u3 = game.getUnitAt(new Position (0, 2));
-		assertNotNull("There is a unit at position (0, 2)", u3);
-		assertEquals("There should be a settler at (0, 2)", GameConstants.SETTLER, u3.getTypeString());
+		Unit u3 = game.getUnitAt(new Position (1, 0));
+		assertNotNull("There is a unit at position (1, 0)", u3);
+		assertEquals("There should be a settler at (1, 0)", GameConstants.SETTLER, u3.getTypeString());
 		
 		//because there is an archer before all this stuff at position (2, 0)
 		assertNotNull("This spot shouldn't be null", game.getUnitAt(new Position (0, 1))); 
 		
-		//So we have to check that the next spot i null
-		assertNull("This spot should be null", game.getUnitAt(new Position (0, 0)));
 	}
 	
 	@Test
@@ -346,9 +344,9 @@ public class TestAlphaCiv {
 			game.createProductionInCityAt(new Position(4, 1));
 		}
 		
-		Unit u2 = game.getUnitAt(new Position(5, 1));
-		assertNotNull("There is a unit at position (5, 1)", u2);
-		assertEquals("There should be a legion at (5, 1)", GameConstants.LEGION, u2.getTypeString());
+		Unit u2 = game.getUnitAt(new Position(3, 1));
+		assertNotNull("There is a unit at position (3, 1)", u2);
+		assertEquals("There should be a legion at (3, 1)", GameConstants.LEGION, u2.getTypeString());
 		assertNull("This spot should be null", game.getUnitAt(new Position(5, 2)));
 	}
 	
@@ -376,15 +374,12 @@ public class TestAlphaCiv {
 					game.createProductionInCityAt(new Position(1, 1));
 				}
 		
-		Unit u2 = game.getUnitAt(new Position(2, 1));
-		assertNotNull("There is a unit at position (2, 1)", u2);
-		assertEquals("There should be a archer at (2, 1)", GameConstants.ARCHER, u2.getTypeString());
-		
-		//because there is an archer before all this stuff at position (2, 0)
-		assertNotNull("This spot shouldn't be null", game.getUnitAt(new Position (2, 2))); 
+		Unit u2 = game.getUnitAt(new Position(1, 0));
+		assertNotNull("There is a unit at position (1, 0)", u2);
+		assertEquals("There should be a archer at (1, 0)", GameConstants.ARCHER, u2.getTypeString());
 		
 		//So we have to check that the next spot i null
-		assertNull("This spot should be null", game.getUnitAt(new Position(1, 2)));
+		assertNull("This spot should be null", game.getUnitAt(new Position(0, 2)));
 	}
 
 }
