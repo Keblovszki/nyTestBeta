@@ -1,6 +1,6 @@
 package hotciv.standard;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import hotciv.different.AlphaUnitActionStrategy;
 import hotciv.different.AlphaWorldLayoutStrategy;
 import hotciv.different.BetaWinnerStrategy;
@@ -94,6 +94,18 @@ public class TestBetaCiv {
 	public void blueWinner() {
 		game.moveUnit(new Position(3, 2), new Position(1, 1));
 		assertEquals("Blue winner", game.getWinner(), Player.BLUE);
+	}
+	
+	@Test
+	public void thereShouldNotbeAWinner(){
+		assertNull("No winner!", game.getWinner());
+		
+		//runs 20 rounds...
+		for(int i = 0; i < 40; i++) {
+			game.endOfTurn();
+		}
+		
+		assertNull("No winner!", game.getWinner());
 	}
 }
 	
