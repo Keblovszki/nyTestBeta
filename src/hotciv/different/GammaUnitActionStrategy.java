@@ -16,15 +16,17 @@ public class GammaUnitActionStrategy implements UnitActionStrategy {
 			this.game.addCity(p, owner);
 		}
 		//The archer fortifies..
-//		Synes det skal sådan her ud men det virker ikke..
-//		else if (type.equals(GameConstants.ARCHER)) {
-//			if(game.getUnitAt(p).getDefensiveStrength() == 3) {
-//				game.getUnitAt(p).increaseBonusDefenseStrength(game.getUnitAt(p).getDefensiveStrength());
-//			}
-//			if(game.getUnitAt(p).getDefensiveStrength() == 6) {
-//				game.getUnitAt(p).increaseBonusDefenseStrength(-(game.getUnitAt(p).getDefensiveStrength()/2));
-//			}
-//		}
+//Synes det skal sådan her ud men det virker ikke..
+/*		else if (type.equals(GameConstants.ARCHER)) {
+			if(game.getUnitAt(p).getDefensiveStrength() == 3) {
+				game.getUnitAt(p).increaseBonusDefenseStrength(game.getUnitAt(p).getDefensiveStrength());
+			}
+			if(game.getUnitAt(p).getDefensiveStrength() == 6) {
+				game.getUnitAt(p).increaseBonusDefenseStrength(-(game.getUnitAt(p).getDefensiveStrength()/2));
+			}
+		}
+	}*/
+		
 				else if (type.equals(GameConstants.ARCHER)) {
 						int defensiveStrength = game.getUnitAt(p).getDefensiveStrength();
 						if(defensiveStrength == 3) {
