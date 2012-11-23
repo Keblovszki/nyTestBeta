@@ -54,5 +54,7 @@ public interface Unit {
    */
   public int getAttackingStrength();
   
-  public void setDefensiveStrength(int bonusStrength);
+  public void increaseBonusDefenseStrength(int bonusStrength);
+  
+  public boolean isArcherFortify();
 }

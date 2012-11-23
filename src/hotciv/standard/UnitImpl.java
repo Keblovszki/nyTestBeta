@@ -45,7 +45,7 @@ public class UnitImpl implements Unit{
 	}
 	
 	@Override
-	public void setDefensiveStrength(int bonusStrength){
+	public void increaseBonusDefenseStrength(int bonusStrength){
 		extraDefenseStrength += bonusStrength;
 	}
 	
@@ -61,6 +61,17 @@ public class UnitImpl implements Unit{
 			attackStrength = 0;
 		}
 		return attackStrength;
+	}
+	
+	 @Override
+	public boolean isArcherFortify(){
+		if(type.equals(GameConstants.ARCHER) && this.getDefensiveStrength() == defenseStrength){
+			return false;
+		}
+		else if (type.equals(GameConstants.ARCHER) && this.getDefensiveStrength() != defenseStrength){
+			return true;
+		}
+		else return false;
 	}
 
 }

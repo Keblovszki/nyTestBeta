@@ -38,7 +38,7 @@ public class TestGammaCiv {
 	@Test
 	public void theArcherShouldFortifyCorrect(){
 		Position p = new Position(2, 0);
-		assertEquals("There is a settler at (2, 0)", game.getUnitAt(p).getTypeString(), GameConstants.ARCHER);
+		assertEquals("There is a archer at (2, 0)", game.getUnitAt(p).getTypeString(), GameConstants.ARCHER);
 		assertEquals("The archer is red", game.getUnitAt(p).getOwner(), Player.RED);
 		assertEquals("The defenseStrength should be 3", 3, game.getUnitAt(p).getDefensiveStrength());
 
