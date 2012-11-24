@@ -76,11 +76,12 @@ public class GameImpl implements Game {
 	public boolean moveUnit(Position from, Position to) {
 		//Moves your unit
 		if(mapUnit.get(to) == null ) {
-			if(mapUnit.get(from).isArcherFortify() == true) {
+			if(mapUnit.get(from).isNotArcherFortify() == true) {
 				return false;
 			}
-				else{mapUnit.put(to, mapUnit.get(from) );
-				mapUnit.remove(from);
+			else{
+			mapUnit.put(to, mapUnit.get(from) );
+			mapUnit.remove(from);
 				if(mapCity.get(to) != null ) {
 					if(mapCity.get(to).getOwner() == mapUnit.get(to).getOwner()) {
 					return true;
@@ -94,7 +95,7 @@ public class GameImpl implements Game {
 		}
 		//Attack another unit
 		else if(mapUnit.get(to) != null) {
-			if(mapUnit.get(from).isArcherFortify() == true) {
+			if(mapUnit.get(from).isNotArcherFortify() == true) {
 				return false;
 			}
 			else{
@@ -138,7 +139,7 @@ public class GameImpl implements Game {
 
 	public void performUnitActionAt(Position p) {
 		unitActionStrategy.setGame(this);
-		String u = mapUnit.get(p).getTypeString(); 
+		Unit u = mapUnit.get(p); 
 		unitActionStrategy.performUnitActionAt(u, p);
 	}
 	

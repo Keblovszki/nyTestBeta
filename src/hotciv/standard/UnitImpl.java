@@ -7,6 +7,7 @@ public class UnitImpl implements Unit{
 	private int defenseStrength = 0;
 	private int extraDefenseStrength = 0;
 	private int attackStrength = 0;
+	private boolean isFortify = false;
 	
 	//Constructor
 	public UnitImpl(Player p, String t){
@@ -63,13 +64,19 @@ public class UnitImpl implements Unit{
 		return attackStrength;
 	}
 	
+	@Override
+	public void setIsNotFortify(boolean fortify) {
+		isFortify = fortify;
+	}
+	
 	 @Override
-	public boolean isArcherFortify(){
-		if(type.equals(GameConstants.ARCHER) && this.getDefensiveStrength() == defenseStrength){
-			return false;
+	public boolean isNotArcherFortify(){
+		if(type.equals(GameConstants.ARCHER) && this.getDefensiveStrength() == defenseStrength) {
+			setIsNotFortify(true);
+			return isFortify;
 		}
-		else if (type.equals(GameConstants.ARCHER) && this.getDefensiveStrength() != defenseStrength){
-			return true;
+		else if (type.equals(GameConstants.ARCHER) && this.getDefensiveStrength() != defenseStrength) {
+			return isFortify;
 		}
 		else return false;
 	}

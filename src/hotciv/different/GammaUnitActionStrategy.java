@@ -7,15 +7,27 @@ public class GammaUnitActionStrategy implements UnitActionStrategy {
 	private GameImpl game;
 	
 	@Override
-	public void performUnitActionAt(String type, Position p) {
+	public void performUnitActionAt(Unit unit, Position p) {
 		Player owner = this.game.getUnitAt(p).getOwner();
 		
+		//The archer fortifies..
+				if(unit.getTypeString().equals(GameConstants.ARCHER)) {
+					if(unit.isNotArcherFortify()) {
+						unit.increaseBonusDefenseStrength(unit.getDefensiveStrength());
+						unit.setIsNotFortify(false);
+					}
+					else {
+						unit.increaseBonusDefenseStrength(- unit.getDefensiveStrength());
+						unit.setIsNotFortify(true);
+					}
+				}
+		
 		//Settler builds the city..
-		if(type.equals(GameConstants.SETTLER)) {
+		if(unit.getTypeString().equals(GameConstants.SETTLER)) {
 			this.game.removeUnit(p);
 			this.game.addCity(p, owner);
 		}
-		//The archer fortifies..
+	}
 //Synes det skal sådan her ud men det virker ikke..
 /*		else if (type.equals(GameConstants.ARCHER)) {
 			if(game.getUnitAt(p).getDefensiveStrength() == 3) {
@@ -26,7 +38,7 @@ public class GammaUnitActionStrategy implements UnitActionStrategy {
 			}
 		}
 	}*/
-		
+		/*
 				else if (type.equals(GameConstants.ARCHER)) {
 						int defensiveStrength = game.getUnitAt(p).getDefensiveStrength();
 						if(defensiveStrength == 3) {
@@ -37,6 +49,7 @@ public class GammaUnitActionStrategy implements UnitActionStrategy {
 						}
 					}
 			}
+		*/
 	
 	public void setGame(GameImpl game) {
 		this.game = game;

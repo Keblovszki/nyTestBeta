@@ -56,5 +56,7 @@ public interface Unit {
   
   public void increaseBonusDefenseStrength(int bonusStrength);
   
-  public boolean isArcherFortify();
+  public void setIsNotFortify(boolean fortify);
+  
+  public boolean isNotArcherFortify();
 }

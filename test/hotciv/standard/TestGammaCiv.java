@@ -41,6 +41,7 @@ public class TestGammaCiv {
 		assertEquals("There is a archer at (2, 0)", game.getUnitAt(p).getTypeString(), GameConstants.ARCHER);
 		assertEquals("The archer is red", game.getUnitAt(p).getOwner(), Player.RED);
 		assertEquals("The defenseStrength should be 3", 3, game.getUnitAt(p).getDefensiveStrength());
+		assertNotNull("The archer stays at its position", game.getUnitAt(p));
 
 		//do the fortify
 		game.performUnitActionAt(p);
