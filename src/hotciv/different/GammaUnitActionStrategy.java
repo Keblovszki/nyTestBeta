@@ -17,7 +17,7 @@ public class GammaUnitActionStrategy implements UnitActionStrategy {
 						unit.setIsNotFortify(false);
 					}
 					else {
-						unit.increaseBonusDefenseStrength(- unit.getDefensiveStrength());
+						unit.increaseBonusDefenseStrength(- (unit.getDefensiveStrength()/2));
 						unit.setIsNotFortify(true);
 					}
 				}

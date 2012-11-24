@@ -76,7 +76,7 @@ public class GameImpl implements Game {
 	public boolean moveUnit(Position from, Position to) {
 		//Moves your unit
 		if(mapUnit.get(to) == null ) {
-			if(mapUnit.get(from).isNotArcherFortify() == true) {
+			if(mapUnit.get(from).isNotArcherFortify() == false) {
 				return false;
 			}
 			else{
